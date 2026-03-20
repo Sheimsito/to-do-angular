@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-gray-100 p-8">
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow p-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Todo List W Angular</h1>
+
+    <p class="w-full border-1 border-gray-500 mb-5"></p>
+
+    <h2 class="text-lg font-bold mb-2">Agregar una nueva tarea</h2>
+    <div class="flex-row mb-6">
+      <input [(ngModel)]="nuevaTarea" type="text" placeholder="Agregar nueva tarea" class="w-full p-2 border rounded border-gray-300"> 
+      <button (click)="agregarTarea()" class="w-full bg-blue-500 border rounded pt-2 pb-2 mt-3 text-white border-cyan-500 hover:bg-blue-300 hover:scale-105 transition">
+        Agregar
+      </button>
+    </div>
+
+    <p class="w-full border-1 border-gray-500 mb-5"></p>
+
+    <div class="flex-col mb-2">
+        <button (click)="filtroActivo.set('todas')"
+  class="bg-blue-500 w-30 h-8 border rounded border-cyan-500 text-white  mr-2">
+        Todas   
+        </button>
+    
+        <button (click)="filtroActivo.set('completadas')" class="bg-green-500 w-30 h-8 border rounded border-green-200 text-white  mr-2">
+        Completadas   
+        </button>
+
+        <button (click)="filtroActivo.set('pendientes')" class="bg-yellow-500 w-30 h-8 border rounded border-yellow-200 text-white mr-2">
+        Pendientes
+        </button>
+    </div>  
+
+    <p class="w-full border-1 border-gray-500 mb-5"></p>
+    <ul class="space-y-3">
+    @for (tarea of tareasFiltradas(); track tarea.id) {
+        <app-todo-item 
+        [tarea]="tarea"
+        (toggleTarea)="toggleCompletada($event)"
+        (eliminarTarea)="eliminarTarea($event)"
+        />
+    }
+    </ul>
+    @if(tareasPendientes() > 0){
+      <p class="flex justify-center pt-5"><strong>{{tareasPendientes()}} Tareas pendientes</strong></p>
+    } @else {
+      <p class="flex justify-center pt-5"><strong>¡Felicidades! No hay tareas pendientes</strong></p>
+    }        
+  </div>
+</div>

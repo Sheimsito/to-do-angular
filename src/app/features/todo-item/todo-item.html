@@ -1,0 +1,12 @@
+<li class="flex items-center justify-between gap-3 p-3 rounded-lg border border-gray-200">
+  <div class="flex items-center gap-3">
+    <input type="checkbox" [checked]="tarea.completada" (change)="onToggle()">
+    <span [class.line-through]="tarea.completada">
+      {{ tarea.texto }} — {{ tarea.completada ? 'Completada' : 'No completada' }}
+    </span>
+  </div>
+
+  <button (click)="onEliminar()" class="flex items-center gap-2 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition">
+    Eliminar
+  </button>
+</li>
