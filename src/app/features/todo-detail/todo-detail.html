@@ -1,0 +1,14 @@
+<div class="min-h-screen bg-gray-100 p-8">
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow p-6">
+    @if (todoService.cargando()) {
+      <p class="text-gray-400">Cargando tarea... ⏳</p>
+    } @else if (!tarea()) {
+      <p class="text-gray-400">Tarea no encontrada 😢</p>
+    } @else {
+      <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ tarea()!.texto }}</h1>
+      <p class="text-gray-600">
+        Estado: {{ tarea()!.completada ? 'Completada ✅' : 'Pendiente ⏳' }}
+      </p>
+    }
+  </div>
+</div>

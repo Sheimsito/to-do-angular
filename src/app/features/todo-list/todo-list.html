@@ -10,28 +10,34 @@
       <button (click)="agregarTarea()" class="w-full bg-blue-500 border rounded pt-2 pb-2 mt-3 text-white border-cyan-500 hover:bg-blue-300 hover:scale-105 transition">
         Agregar
       </button>
-    </div>
+    </div>                
 
     <p class="w-full border-1 border-gray-500 mb-5"></p>
 
     <div class="flex-col mb-2">
-        <button (click)="filtroActivo.set('todas')"
+        <button (click)="todoService.filtroActivo.set('todas')"
   class="bg-blue-500 w-30 h-8 border rounded border-cyan-500 text-white  mr-2">
         Todas   
         </button>
     
-        <button (click)="filtroActivo.set('completadas')" class="bg-green-500 w-30 h-8 border rounded border-green-200 text-white  mr-2">
+        <button (click)="todoService.filtroActivo.set('completadas')" class="bg-green-500 w-30 h-8 border rounded border-green-200 text-white  mr-2">
         Completadas   
         </button>
 
-        <button (click)="filtroActivo.set('pendientes')" class="bg-yellow-500 w-30 h-8 border rounded border-yellow-200 text-white mr-2">
+        <button (click)="todoService.filtroActivo.set('pendientes')" class="bg-yellow-500 w-30 h-8 border rounded border-yellow-200 text-white mr-2">
         Pendientes
         </button>
     </div>  
 
     <p class="w-full border-1 border-gray-500 mb-5"></p>
+  @if (todoService.cargando()) {
+  <p class="text-center text-gray-400 py-4">Cargando tareas... ⏳</p>
+  }@else if (todoService.error()){
+    <p class="text-center text-red-500 p-4"> {{todoService.error()}} </p>
+  } 
+  @else {
     <ul class="space-y-3">
-    @for (tarea of tareasFiltradas(); track tarea.id) {
+    @for (tarea of todoService.tareasFiltradas(); track tarea.id) {
         <app-todo-item 
         [tarea]="tarea"
         (toggleTarea)="toggleCompletada($event)"
@@ -39,8 +45,9 @@
         />
     }
     </ul>
-    @if(tareasPendientes() > 0){
-      <p class="flex justify-center pt-5"><strong>{{tareasPendientes()}} Tareas pendientes</strong></p>
+    }
+    @if(todoService.tareasPendientes() > 0){
+      <p class="flex justify-center pt-5"><strong>{{todoService.tareasPendientes()}} Tareas pendientes</strong></p>
     } @else {
       <p class="flex justify-center pt-5"><strong>¡Felicidades! No hay tareas pendientes</strong></p>
     }        

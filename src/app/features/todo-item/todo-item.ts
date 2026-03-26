@@ -1,7 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-todo-item',
+  imports: [ RouterLink],
   templateUrl: './todo-item.html',
   styleUrl: './todo-item.css'
 })
