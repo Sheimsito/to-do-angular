@@ -43,7 +43,8 @@ export class TodoService {
       const nuevaTarea = {
         id: Date.now(),
         texto: texto,
-        completada: false
+        completada: false,
+        creadaEn: new Date()
       };
       this.tareas.update(tareas => [...tareas, nuevaTarea]);
     }
@@ -65,7 +66,8 @@ export class TodoService {
       const tareas = tareasAPI.map( t => ({
         id: t.id,
         texto: t.title,
-        completada: t.completed
+        completada: t.completed,
+        creadaEn: new Date()
       }));
       this.tareas.set(tareas)
       this.cargando.set(false)

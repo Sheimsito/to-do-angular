@@ -6,8 +6,27 @@
 
     <h2 class="text-lg font-bold mb-2">Agregar una nueva tarea</h2>
     <div class="flex-row mb-6">
-      <input [(ngModel)]="nuevaTarea" type="text" placeholder="Agregar nueva tarea" class="w-full p-2 border rounded border-gray-300"> 
-      <button (click)="agregarTarea()" class="w-full bg-blue-500 border rounded pt-2 pb-2 mt-3 text-white border-cyan-500 hover:bg-blue-300 hover:scale-105 transition">
+    
+      <input 
+      [formControl]="tareaControl" 
+      type="text"
+      placeholder="Agregar una nueva tarea" 
+      class="w-full p-2 border rounded border-gray-300" 
+      [class.border-red-500]="tareaControl.invalid && tareaControl.touched">
+
+      @if (tareaControl.invalid && tareaControl.touched){
+        @if(tareaControl.errors?.['required']){
+          <p class="text-red-500 text-sm mt-1">La tarea no puede ingresarse vacía.</p>
+        }
+        @else if(tareaControl.errors?.['minlength']){
+          <p class="text-red-500 text-sm mt-1">Ingrese mínimo 3 carácteres.</p>
+        }
+        @else if(tareaControl.errors?.['maxlength']){
+          <p class="text-red-500 text-sm mt-1">El máximo de carácteres es: <strong>50</strong></p>
+        }
+      }
+
+      <button (click)="agregarTarea()" [disabled]="tareaControl.invalid" class="w-full bg-blue-500 border rounded pt-2 pb-2 mt-3 text-white border-cyan-500 hover:bg-blue-300 hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:bg-blue-500">
         Agregar
       </button>
     </div>                
